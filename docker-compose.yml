@@ -1,0 +1,44 @@
+name: brama
+
+services:
+  caddy:
+    image: ${CADDY_IMAGE:-caddy:2.11.4-alpine}
+    restart: unless-stopped
+    ports:
+      - "${BRAMA_HTTP_BIND:-80}:80"
+      - "${BRAMA_HTTPS_BIND:-443}:443"
+      - "${BRAMA_HTTPS_BIND:-443}:443/udp"
+    environment:
+      SZOP_DOMAIN: ${SZOP_DOMAIN:?Ustaw SZOP_DOMAIN w pliku .env}
+      OPOS_DOMAIN: ${OPOS_DOMAIN:?Ustaw OPOS_DOMAIN w pliku .env}
+    volumes:
+      - ${BRAMA_CADDYFILE:-./Caddyfile}:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - szop-edge
+      - opos-edge
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "caddy", "validate", "--config", "/etc/caddy/Caddyfile"]
+      interval: 30s
+      timeout: 10s
+      start_period: 10s
+      retries: 3
+
+networks:
+  szop-edge:
+    external: true
+    name: ${SZOP_EDGE_NETWORK:-brama-szop}
+  opos-edge:
+    external: true
+    name: ${OPOS_EDGE_NETWORK:-brama-opos}
+
+volumes:
+  caddy_data:
+    external: true
+    name: ${CADDY_DATA_VOLUME:-szop_caddy_data}
+  caddy_config:
+    external: true
+    name: ${CADDY_CONFIG_VOLUME:-szop_caddy_config}

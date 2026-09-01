@@ -1,0 +1,32 @@
+(security_headers) {
+    header {
+        X-Frame-Options DENY
+        X-Content-Type-Options nosniff
+        Referrer-Policy strict-origin-when-cross-origin
+        -Server
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    }
+}
+{$SZOP_DOMAIN} {
+    import security_headers
+    reverse_proxy szop-app:8000
+
+    log {
+        output file /data/logs/szop-access.log {
+            roll_size 10MB
+            roll_keep 3
+        }
+    }
+}
+
+{$OPOS_DOMAIN} {
+    import security_headers
+    reverse_proxy opos-app:8000
+
+    log {
+        output file /data/logs/opos-access.log {
+            roll_size 10MB
+            roll_keep 3
+        }
+    }
+}

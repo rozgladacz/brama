@@ -1,0 +1,21 @@
+{
+    auto_https off
+}
+(local_security_headers) {
+    header {
+        X-Frame-Options DENY
+        X-Content-Type-Options nosniff
+        Referrer-Policy strict-origin-when-cross-origin
+        -Server
+    }
+}
+
+http://szop.localhost {
+    import local_security_headers
+    reverse_proxy szop-app:8000
+}
+
+http://opos.localhost {
+    import local_security_headers
+    reverse_proxy opos-app:8000
+}
