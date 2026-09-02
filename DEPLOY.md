@@ -28,14 +28,14 @@ cp Caddyfile Caddyfile.pre-brama
 cp .env .env.pre-brama
 ```
 
-Ustal faktyczne nazwy wolumenów dotychczasowego Caddy, zwykle `szop_caddy_data` i `szop_caddy_config`.
+Ustal faktyczne źródła mountów `/data` i `/config` dotychczasowego Caddy. Jeśli są to katalogi bind, ustaw ich bezwzględne ścieżki jako `CADDY_DATA_MOUNT` i `CADDY_CONFIG_MOUNT`. Jeśli są to wolumeny nazwane, pozostaw aliasy `caddy_data`/`caddy_config` i ustaw ich faktyczne nazwy w `CADDY_DATA_VOLUME`/`CADDY_CONFIG_VOLUME`.
 
 ## Przygotowanie
 
 ```bash
 cd /srv/brama
 cp .env.example .env
-# Uzupełnij SZOP_DOMAIN, OPOS_DOMAIN i nazwy wolumenów.
+# Uzupełnij domeny oraz źródła mountów Caddy zgodnie z preflightem.
 set -a
 . ./.env
 set +a

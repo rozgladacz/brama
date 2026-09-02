@@ -40,4 +40,4 @@ Smoke test wysyła żądania do `127.0.0.1:8080` z właściwym nagłówkiem `Hos
 
 ## Produkcja
 
-Instrukcja migracji i rollbacku znajduje się w [DEPLOY.md](DEPLOY.md). Przed startem skopiuj `.env.example` do `.env`, wpisz obie domeny i potwierdź rzeczywiste nazwy istniejących wolumenów Caddy.
+Instrukcja migracji i rollbacku znajduje się w [DEPLOY.md](DEPLOY.md). Przed startem skopiuj `.env.example` do `.env`, wpisz obie domeny i potwierdź, czy istniejące dane Caddy są wolumenami nazwanymi, czy katalogami bind. Oba warianty są obsługiwane bez kopiowania certyfikatów.
