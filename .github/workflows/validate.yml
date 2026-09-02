@@ -41,6 +41,8 @@ jobs:
       - name: Validate local Caddyfile
         run: >-
           docker run --rm
+          -e SZOP_DOMAIN=szop.localhost
+          -e OPOS_DOMAIN=opos.localhost
           -v "$PWD/Caddyfile.local:/etc/caddy/Caddyfile:ro"
           caddy:2.11.4-alpine
           caddy validate --config /etc/caddy/Caddyfile

@@ -10,12 +10,12 @@
     }
 }
 
-http://szop.localhost {
+http://{$SZOP_DOMAIN} {
     import local_security_headers
     reverse_proxy szop-app:8000
 }
 
-http://opos.localhost {
+http://{$OPOS_DOMAIN} {
     import local_security_headers
     reverse_proxy opos-app:8000
 }
